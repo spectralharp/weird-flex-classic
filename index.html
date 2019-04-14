@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en">
+<!--
+  CSE 154
+  Lecture 5
+  HTML for box layout practice
+-->
+<head>
+  <meta charset="UTF-8">
+  <title>Weird Flex: Flexbox Playground</title>
+  <link rel="stylesheet" href="style.css">
+  <style id="container-style"></style>
+  <script src="flex.js"></script>
+</head>
+
+<body>
+  <!-- Let's layout some boxes! -->
+  <h1>Weird Flex</h1>
+  <main>
+
+    <section>
+      <h2>Flex properties</h2>
+      <p><label class="gray">flex-direction</label> : determines the major axis of the container</p>
+      <p>Values :
+        <label class="gray">row</label>
+        <label class="gray">row-reverse</label>
+        <label class="gray">column</label>
+        <label class="gray">column-reverse</label>
+      </p>
+      <p><label class="red">justify-content</label> : align items by major axis</p>
+      <p>Values :
+        <label class="gray">flex-start</label>
+        <label class="gray">flex-end</label>
+        <label class="gray">center</label>
+        <label class="gray">space-around</label>
+        <label class="gray">space-between</label>
+        <label class="gray">space-evenly</label>
+      </p>
+      <p><label class="blue">align-items</label> : align items by cross axis</p>
+      <p>Values :
+        <label class="gray">flex-start</label>
+        <label class="gray">flex-end</label>
+        <label class="gray">center</label>
+        <label class="gray">stretch</label>
+        <label class="gray">baseline</label>
+      </p>
+      <h2>#boxes-container {</h2>
+      <textarea id="container-input" cols="50" rows="6">display: flex;</textarea>
+      <h2>}</h2>
+    </section>
+
+    <section id="flex-view">
+
+      <div id="vertical">
+        <div class="arrow-body-vertical"></div>
+        <div class="arrow-body-vertical"></div>
+        <span>cross axis</span>
+        <div class="arrow-body-vertical"></div>
+        <div class="arrow-head-down"></div>
+      </div>
+      <!-- Box area -->
+      <div id="boxes-container" class="gray">
+        <div>0</div>
+        <div>1</div>
+        <div>2</div>
+        <div>3</div>
+        <div>4</div>
+        <div>5</div>
+      </div>
+
+      <div id="horizontal">
+        <div class="arrow-body-horizontal"></div>
+        <div class="arrow-body-horizontal"></div>
+        <span>main axis</span>
+        <div class="arrow-body-horizontal"></div>
+        <div class="arrow-head-right"></div>
+      </div>
+
+    </section>
+
+  </main>
+
+</body>
+
+</html>

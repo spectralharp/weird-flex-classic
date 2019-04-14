@@ -1,0 +1,120 @@
+@import url('https://fonts.googleapis.com/css?family=Lato');
+
+body {
+  background-color: #434343;
+  font-family: 'Lato', sans-serif;
+  color: white;
+}
+
+main {
+  display: flex;
+  justify-content: space-around;
+  align-items: flex-start;
+  flex-wrap: wrap;
+}
+
+label {
+  padding: 2px 5px;
+  border-radius: 2px;
+}
+
+label, p, textarea {
+  font-size: 14pt;
+}
+
+#boxes-container {
+  width: 500px;
+  height: 500px;
+  font-size: 20pt;
+  border: 5pt solid silver;
+  overflow: auto;
+  resize: both;
+}
+
+#boxes-container > div {
+  width: 50px;
+  height: 50px;
+  text-align: center;
+  line-height: 50px;
+  border: 5pt solid black;
+  z-index: 10;
+}
+
+#boxes-container > div:nth-child(odd), .blue{
+  background-color: #029dc3;
+}
+
+#boxes-container > div:nth-child(even), .red {
+  background-color: #e2525e;
+}
+
+.gray {
+  background-color: gray;
+}
+
+#flex-view {
+  display: grid;
+  grid-template: 1fr 40pt / 40pt 1fr;
+}
+
+#vertical {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  grid-area: 1 / 1 / 2 / 2;
+}
+
+#vertical span, #horizontal span {
+  margin: 0;
+  padding: 10px;
+  text-align: center;
+}
+
+#horizontal {
+  display: flex;
+  align-items: center;
+  grid-area: 2 / 2 / 3 / 3;
+}
+
+.arrow-head-up, .arrow-head-down, .arrow-head-left, .arrow-head-right {
+  width: 0;
+	height: 0;
+	border: 6pt solid transparent;
+}
+
+.arrow-head-up {
+	border-bottom: 10pt solid white;
+}
+
+.arrow-head-down {
+	border-top: 10pt solid white;
+}
+
+.arrow-head-left {
+	border-right: 10pt solid white;
+}
+
+.arrow-head-right {
+	border-left: 10pt solid white;
+}
+
+.arrow-body-vertical {
+  width: 4pt;
+  height: 100%;
+  background-color: white;
+}
+
+.arrow-body-horizontal {
+  height: 4pt;
+  width: 100%;
+  background-color: white;
+}
+
+
+textarea {
+  resize: none;
+  border-radius: 2px;
+  border: none;
+  padding: 2pt;
+  margin-left: 32pt;
+}

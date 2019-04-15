@@ -1,4 +1,10 @@
+/*
+  CSS for Weird Flex
+*/
+
 @import url('https://fonts.googleapis.com/css?family=Lato');
+
+/* Layout */
 
 body {
   background-color: #434343;
@@ -9,17 +15,40 @@ body {
 main {
   display: flex;
   justify-content: space-around;
-  align-items: flex-start;
   flex-wrap: wrap;
 }
+
+#flex-desc {
+  height: 70vh;
+  /*overflow-y: scroll;
+  padding: 2%;*/
+}
+
+.collapse-content {
+  display: none;
+}
+
+/* Typography */
 
 label {
   padding: 2px 5px;
   border-radius: 2px;
 }
 
-label, p, textarea {
+label, p, textarea, pre {
   font-size: 14pt;
+}
+
+h1 {
+  text-align: center;
+}
+
+/* Box section layout */
+
+#flex-view {
+  /* Ironic, I know */
+  display: grid;
+  grid-template: 1fr 40pt / 40pt 1fr;
 }
 
 #boxes-container {
@@ -40,39 +69,54 @@ label, p, textarea {
   z-index: 10;
 }
 
-#boxes-container > div:nth-child(odd), .blue{
-  background-color: #029dc3;
+.red, #boxes-container > div:nth-child(even) {
+  background-color: #e2525e;
 }
 
-#boxes-container > div:nth-child(even), .red {
-  background-color: #e2525e;
+.blue, #boxes-container > div:nth-child(odd) {
+  background-color: #029dc3;
 }
 
 .gray {
   background-color: gray;
 }
 
-#flex-view {
-  display: grid;
-  grid-template: 1fr 40pt / 40pt 1fr;
+label.red, label.blue, label.gray {
+  cursor: pointer;
+  user-select: none;
+  transition: all 0.2s ease-in;
 }
 
-#vertical {
+label.red:hover {
+ background-color: #f37781;
+}
+
+label.blue:hover {
+  background-color: #1ebfe7;
+}
+
+label.gray:hover {
+  background-color: #b9b9b9;
+}
+
+/* Arrows */
+
+#vertical, #horizontal {
   display: flex;
-  flex-direction: column;
   align-items: center;
-  grid-area: 1 / 1 / 2 / 2;
 }
 
 #vertical span, #horizontal span {
-  margin: 0;
   padding: 10px;
   text-align: center;
 }
 
+#vertical {
+  flex-direction: column;
+  grid-area: 1 / 1 / 2 / 2;
+}
+
 #horizontal {
-  display: flex;
-  align-items: center;
   grid-area: 2 / 2 / 3 / 3;
 }
 
@@ -110,11 +154,17 @@ label, p, textarea {
   background-color: white;
 }
 
-
 textarea {
   resize: none;
   border-radius: 2px;
-  border: none;
-  padding: 2pt;
-  margin-left: 32pt;
+  border: 2pt solid black;
+  padding: 4pt 4pt 4pt 16pt;
+  color: white;
+  background-color: #101010;
+  transition: border-color 0.2s ease-in;
+  outline: none;
+}
+
+textarea:focus {
+  border-color: gray;
 }

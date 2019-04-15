@@ -7,28 +7,63 @@
 -->
 <head>
   <meta charset="UTF-8">
-  <title>Weird Flex: Flexbox Playground</title>
+  <title>Weird Flex 💪: Flexbox Playground</title>
   <link rel="stylesheet" href="style.css">
   <style id="container-style"></style>
   <script src="flex.js"></script>
 </head>
 
 <body>
-  <!-- Let's layout some boxes! -->
-  <h1>Weird Flex</h1>
+  <header>
+    <h1>Weird Flex 💪</h1>
+  </header>
   <main>
+    <!-- Flexbox property descriptions -->
+    <section id="flex-desc">
 
-    <section>
+      <!-- Flexbox property descriptions -->
+      <pre>#boxes-container {</pre>
+      <textarea id="container-input" cols="50" rows="6">display: flex;</textarea>
+      <pre>}</pre>
+
       <h2>Flex properties</h2>
-      <p><label class="gray">flex-direction</label> : determines the major axis of the container</p>
-      <p>Values :
-        <label class="gray">row</label>
-        <label class="gray">row-reverse</label>
-        <label class="gray">column</label>
-        <label class="gray">column-reverse</label>
+
+      <p class="collapse"><label class="gray">flex-direction</label> : determines the major axis of the container</p>
+      <p class="collapse-content" data-property="flex-direction">Values :
+        <label class="gray value-btn">row</label>
+        <label class="gray value-btn">row-reverse</label>
+        <label class="gray value-btn">column</label>
+        <label class="gray value-btn">column-reverse</label>
       </p>
-      <p><label class="red">justify-content</label> : align items by major axis</p>
-      <p>Values :
+
+      <p class="collapse"><label class="gray">flex-wrap</label> : determines whether the items should wrap to a seperate line</p>
+      <p class="collapse-content" data-property="flex-wrap">Values :
+        <label class="gray value-btn">wrap</label>
+        <label class="gray value-btn">no-wrap</label>
+        <label class="gray value-btn">wrap-reverse</label>
+      </p>
+
+      <p class="collapse"><label class="red">justify-content</label> : align items by major axis</p>
+      <p class="collapse-content" data-property="justify-content">Values :
+        <label class="gray value-btn">flex-start</label>
+        <label class="gray value-btn">flex-end</label>
+        <label class="gray value-btn">center</label>
+        <label class="gray value-btn">space-around</label>
+        <label class="gray value-btn">space-between</label>
+        <label class="gray value-btn">space-evenly</label>
+      </p>
+
+      <p class="collapse"><label class="blue">align-items</label> : align single line items by cross axis</p>
+      <p class="collapse-content" data-property="align-items">Values :
+        <label class="gray value-btn">flex-start</label>
+        <label class="gray value-btn">flex-end</label>
+        <label class="gray value-btn">center</label>
+        <label class="gray value-btn">stretch</label>
+        <label class="gray value-btn">baseline</label>
+      </p>
+
+      <p class="collapse"><label class="blue">align-content</label> : align lines of items by cross axis</p>
+      <p class="collapse-content" data-property="align-content">Values :
         <label class="gray">flex-start</label>
         <label class="gray">flex-end</label>
         <label class="gray">center</label>
@@ -36,17 +71,7 @@
         <label class="gray">space-between</label>
         <label class="gray">space-evenly</label>
       </p>
-      <p><label class="blue">align-items</label> : align items by cross axis</p>
-      <p>Values :
-        <label class="gray">flex-start</label>
-        <label class="gray">flex-end</label>
-        <label class="gray">center</label>
-        <label class="gray">stretch</label>
-        <label class="gray">baseline</label>
-      </p>
-      <h2>#boxes-container {</h2>
-      <textarea id="container-input" cols="50" rows="6">display: flex;</textarea>
-      <h2>}</h2>
+
     </section>
 
     <section id="flex-view">

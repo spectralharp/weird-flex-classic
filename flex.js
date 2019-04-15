@@ -10,6 +10,7 @@
 
   function initialize() {
     $("container-input").addEventListener("input", updateContainer);
+    setupCollapse();
     updateContainer();
     updateAxis();
   }
@@ -45,6 +46,19 @@
     $(axis).className = "";
     $(axis).querySelector("span").innerText = axisLabel;
     $(axis).classList.add(color);
+  }
+
+  function setupCollapse() {
+    let coll = document.querySelectorAll(".collapse");
+    for (let i = 0; i < coll.length; i++) {
+      coll[i].addEventListener("click", toggleCollapse);
+    }
+  }
+
+  function toggleCollapse() {
+    let content = this.nextElementSibling;
+    console.log(this);
+    content.style.display = content.style.display === "block" ? "none" : "block";
   }
 
   function $(id) {

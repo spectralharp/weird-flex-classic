@@ -14,14 +14,16 @@ body {
 
 main {
   display: flex;
-  justify-content: space-around;
+  align-items: flex-start;
   flex-wrap: wrap;
 }
 
 #flex-desc {
-  height: 70vh;
-  /*overflow-y: scroll;
-  padding: 2%;*/
+  height: 75vh;
+  min-width: 45vw;
+  overflow-y: scroll;
+  padding: 2%;
+  margin-right: 5vw;
 }
 
 .collapse-content {
@@ -60,25 +62,29 @@ h1 {
   resize: both;
 }
 
-#boxes-container > div {
-  width: 50px;
-  height: 50px;
+.box {
+  min-width: 50px;
+  min-height: 50px;
   text-align: center;
   line-height: 50px;
   border: 5pt solid black;
-  z-index: 10;
+  cursor: pointer;
 }
 
-.red, #boxes-container > div:nth-child(even) {
+.red, .box:nth-child(even) {
   background-color: #e2525e;
 }
 
-.blue, #boxes-container > div:nth-child(odd) {
+.blue, .box:nth-child(odd) {
   background-color: #029dc3;
 }
 
 .gray {
   background-color: gray;
+}
+
+.selected {
+  box-shadow: inset 0px 0px 0px 5px white;
 }
 
 label.red, label.blue, label.gray, .collapse:hover {
@@ -100,8 +106,10 @@ label.gray:hover {
   background-color: #b9b9b9;
 }
 
+/* Collapsable */
+
 .collapse {
-  margin: 0.25em 0;
+  margin: 4pt 0;
   padding: 10px;
 }
 
@@ -111,12 +119,9 @@ label.gray:hover {
 }
 
 .collapse::after {
-  content: '▼';
-  margin-left: 2em;
+  content: 'v';
+  margin-left: 16pt;
   float: right;
-}
-
-.collapse-content {
 }
 
 /* Arrows */
@@ -133,10 +138,12 @@ label.gray:hover {
 
 #vertical {
   flex-direction: column;
+  border-radius: 5px 0 0 5px;
   grid-area: 1 / 1 / 2 / 2;
 }
 
 #horizontal {
+  border-radius: 0 0 5px 5px;
   grid-area: 2 / 2 / 3 / 3;
 }
 
@@ -174,15 +181,24 @@ label.gray:hover {
   background-color: white;
 }
 
+/* Textarea */
+
 textarea {
+  box-sizing: border-box;
+  width: 100%;
+  padding: 0 0 0 14pt;
+
   resize: none;
-  border-radius: 2px;
-  border: 2pt solid black;
-  padding: 4pt 4pt 4pt 16pt;
-  color: white;
+
   background-color: #101010;
-  transition: border-color 0.2s ease-in;
+
+  border: 2pt solid #101010;
+  border-radius: 2px;
   outline: none;
+
+  color: white;
+
+  transition: border-color 0.2s ease-in;
 }
 
 textarea:focus {

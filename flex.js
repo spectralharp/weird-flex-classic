@@ -11,6 +11,7 @@
   function initialize() {
     $("container-input").addEventListener("input", updateContainer);
     setupCollapse();
+    setupValueButtons();
     updateContainer();
     updateAxis();
   }
@@ -55,10 +56,26 @@
     }
   }
 
+  function setupValueButtons() {
+   let btns = document.querySelectorAll(".value-btn");
+   for (let i = 0; i < btns.length; i++) {
+     btns[i].addEventListener("click", addProperty);
+   }
+  }
+
   function toggleCollapse() {
     let content = this.nextElementSibling;
-    console.log(this);
     content.style.display = content.style.display === "block" ? "none" : "block";
+  }
+
+  function addProperty() {
+    let propertyRegex = new RegExp(`(${this.parentElement.dataset["property"]} *: *)[\\w-]*`);
+    if(propertyRegex.test($("container-input").value)) {
+      $("container-input").value = $("container-input").value.replace(propertyRegex, `$1${this.innerText}`);
+    } else {
+      $("container-input").value += "\n" + this.parentElement.dataset["property"] + ": " + this.innerText + ";";
+    }
+    updateContainer();
   }
 
   function $(id) {

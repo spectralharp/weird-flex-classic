@@ -81,10 +81,11 @@ h1 {
   background-color: gray;
 }
 
-label.red, label.blue, label.gray {
+label.red, label.blue, label.gray, .collapse:hover {
   cursor: pointer;
   user-select: none;
   transition: all 0.2s ease-in;
+  color: white;
 }
 
 label.red:hover {
@@ -97,6 +98,25 @@ label.blue:hover {
 
 label.gray:hover {
   background-color: #b9b9b9;
+}
+
+.collapse {
+  margin: 0.25em 0;
+  padding: 10px;
+}
+
+.collapse:hover {
+  background-color: white;
+  color: #434343;
+}
+
+.collapse::after {
+  content: '▼';
+  margin-left: 2em;
+  float: right;
+}
+
+.collapse-content {
 }
 
 /* Arrows */

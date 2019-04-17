@@ -1,9 +1,5 @@
 # Weird Flex
-A place for experimenting with different CSS flexbox properties
-
-## What's this?
-This is an interactive website that allows you to test out different
-CSS flexbox property.
+Weird Flex is an interactive website that allows you to experiment with different CSS flexbox properties.
 
 ### CSS tab
 The CSS tab contains two text areas, edit the CSS in `#container` to style the gray box container on the right. Clicking on the boxes labeled 0-5 toggles the `.selected` class on them, allowing them to be styled by the `.selected` text area.

@@ -15,7 +15,7 @@
   function initialize() {
     id("container-input").addEventListener("input", updateContainer);
     id("item-input").addEventListener("input", updateItem);
-    id("boxes-container").addEventListener("dblclick", addBox);
+    id("add-box").addEventListener("click", addBox);
 
     id("delete-drop").addEventListener("dragover", dragoverDeleteZone);
     id("delete-drop").addEventListener("dragleave", dragleaveDeleteZone);
@@ -30,40 +30,61 @@
 
   /* --------------------------------------- Box Drag ------------------------------------- */
 
+  /**
+   * Sets up event listeners for draggable boxes
+   * @param  {object} box - element to attach event listener to
+   */
   function setupBoxDrag(box) {
-    box.addEventListener("drag", boxDrag);
     box.addEventListener("dragstart", boxDragStart);
     box.addEventListener("dragend", boxDragEnd);
   }
 
-  function boxDrag(e) {
-    console.log("Drag");
-  }
-
+  /**
+   * Hides the box while dragging
+   * @param  {event} e - drag event
+   */
   function boxDragStart(e) {
     this.style.opacity = 0;
+    let audio = new Audio("audio/pickup.mp3");
+    audio.play();
     e.dataTransfer.setData("text", e.target.id);
   }
 
+  /**
+   * Shows the box again when drag ends
+   * @param  {event} e - drag event
+   */
   function boxDragEnd(e) {
+    let audio = new Audio("audio/dropdown.mp3");
+    audio.play();
     this.style.opacity = 1;
   }
 
+  /**
+   * Changes the appearence of trashcan when dragging over
+   * @param  {event} e - drag event
+   */
   function dragoverDeleteZone(e) {
+    e.preventDefault();
     e.target.src = "image/trashcan_open.png";
-    e.preventDefault();
   }
 
+  /**
+   * Changes the appearence of trashcan when dragging out
+   * @param  {event} e - drag event
+   */
   function dragleaveDeleteZone(e) {
-    e.target.src = "image/trashcan_close.png";
     e.preventDefault();
+    e.target.src = "image/trashcan_close.png";
   }
 
+  /**
+   * Deletes the dropped box
+   * @param  {event} e - drag event
+   */
   function deleteBox(e) {
-    console.log("Drop");
-    e.target.src = "image/trashcan_close.png";
     e.preventDefault();
-    console.log(e.dataTransfer);
+    e.target.src = "image/trashcan_close.png";
     let data = e.dataTransfer.getData("text");
     document.getElementById(data).remove();
     refreshBoxId();
@@ -73,11 +94,12 @@
     let box = document.createElement("div");
     box.classList.add("box");
     box.draggable = true;
-    box.innerText = id("boxes-container").childElementCount;
     box.addEventListener("click", toggleSelect);
     setupBoxDrag(box);
     id("boxes-container").appendChild(box);
     refreshBoxId();
+    let audio = new Audio("audio/pickup.mp3");
+    audio.play();
   }
 
   function refreshBoxId() {
@@ -191,12 +213,15 @@
   function setupValueButtons() {
     let contain = document.querySelectorAll("#container-flex-properties .value-btn");
     for (let i = 0; i < contain.length; i++) {
-      contain[i].addEventListener("click", function() { addProperty(contain[i], "container-input"); });
+      contain[i].addEventListener("click", function() {
+        addProperty(contain[i], "container-input");
+      });
     }
-
     let items = document.querySelectorAll("#item-flex-properties .value-btn");
     for (let j = 0; j < items.length; j++) {
-      items[j].addEventListener("click", function() { addProperty(items[j], "item-input"); });
+      items[j].addEventListener("click", function() {
+        addProperty(items[j], "item-input");
+      });
     }
   }
 
@@ -223,13 +248,12 @@
    * @param  {string} input textarea editor to append style to
    */
   function addProperty(label, input) {
-    console.log(label.parentElement.dataset["property"] + ": " + label.innerText);
-    let propertyRegex = new RegExp(`(${label.parentElement.dataset["property"]} *: *)[\\w-%]*`);
-    console.log(propertyRegex);
-    if(propertyRegex.test(id(input).value)) {
-      id(input).value = id(input).value.replace(propertyRegex, `$1${label.innerText}`);
+    let property = label.parentElement.dataset["property"];
+    let regex = new RegExp(`(${property} *: *)[\\w-%]*`);
+    if(regex.test(id(input).value)) {
+      id(input).value = id(input).value.replace(regex, `$1${label.innerText}`);
     } else {
-      id(input).value += "\n" + label.parentElement.dataset["property"] + ": " + label.innerText + ";";
+      id(input).value += "\n" + property + ": " + label.innerText + ";";
     }
     updateContainer();
     updateItem();

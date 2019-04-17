@@ -8,8 +8,9 @@
 
 body {
   background-color: #434343;
-  font-family: 'Lato', sans-serif;
+
   color: white;
+  font-family: 'Lato', sans-serif;
 }
 
 main {
@@ -21,10 +22,11 @@ main {
 #flex-desc {
   height: 75vh;
   width: 45vw;
-  overflow-y: scroll;
-  scroll-behavior: smooth;
+
   padding: 2%;
   margin-right: 5vw;
+
+  overflow-y: scroll;
 }
 
 .collapse-content {
@@ -35,13 +37,13 @@ main {
 /* Typography */
 
 label {
-  padding: 2px 5px;
+  padding: 0 5px;
   border-radius: 2px;
 }
 
 label, p, textarea, pre {
   font-size: 12pt;
-  line-height: 18pt;
+  line-height: 16pt;
 }
 
 h1 {
@@ -49,14 +51,13 @@ h1 {
 }
 
 h2 {
-  font-size: 14pt;
+  font-size: 16pt;
   background-color: gray;
 }
 
 h3 {
-  font-size: 12pt;
+  font-size: 14pt;
 }
-
 
 /* Box section layout */
 
@@ -69,38 +70,45 @@ h3 {
 #boxes-container {
   width: 500px;
   height: 500px;
-  font-size: 20pt;
+  font-size: 18pt;
   border: 5pt solid silver;
   overflow: auto;
   position: relative;
   resize: both;
-  /*background: gray url("image/resize_handle.png") no-repeat right bottom;*/
 }
 
+/* Resize handle */
 #boxes-container::after {
   content: '';
+
   position: absolute;
   right: 0;
   bottom: 0;
 
   width: 20px;
   height: 20px;
-  user-select: none;
+
   background-image: url("image/resize_handle.png");
   background-repeat: no-repeat;
   background-size: contain;
+
   cursor: nwse-resize;
+  user-select: none;
 }
 
 .box {
   min-width: 50px;
   min-height: 50px;
+
+  border: 5pt solid black;
+
   text-align: center;
   line-height: 50px;
-  border: 5pt solid black;
+
   cursor: pointer;
-  transition: all 0.2s ease-out, opacity 0.01s, background-color 0s;
   user-select: none;
+
+  transition: all 0.2s ease-out, opacity 0.05s, background-color 0s;
 }
 
 .red, .box:nth-child(even) {
@@ -144,7 +152,7 @@ label.gray.value-btn:hover {
 /* Collapsable */
 
 .collapse {
-  margin: 4pt 0;
+  margin: 2px 0;
   padding: 5px;
 }
 
@@ -154,7 +162,7 @@ label.gray.value-btn:hover {
 }
 
 .collapse::after {
-  content: 'v';
+  content: '▾';
   margin-left: 16pt;
   float: right;
 }
@@ -261,5 +269,19 @@ textarea::selection {
   height: 50px;
   position: absolute;
   right: 10px;
+  top: 80px;
+}
+
+#add-box {
+  width: 50px;
+  height: 50px;
+  position: absolute;
+  right: 10px;
   top: 10px;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+#add-box:hover {
+  transform: rotate(360deg);
 }

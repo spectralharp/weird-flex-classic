@@ -5,6 +5,17 @@
 "use strict";
 (function() {
 
+  /* --------------------------------------- Constants ------------------------------------ */
+
+  // Draggable pickup sound effect
+  const PICKUP_SFX = "audio/pickup.mp3";
+  // Draggable drop sound effect
+  const DROP_SFX = "audio/dropdown.mp3";
+  // Trash can default image path
+  const BIN_CLOSED = "image/trashcan_close.png";
+  // Trash can drag over image path
+  const BIN_OPEN = "image/trashcan_open.png";
+
   /* ------------------------------------ Initialization ---------------------------------- */
 
   window.addEventListener("load", initialize);
@@ -179,9 +190,8 @@
    */
   function boxDragStart(e) {
     this.style.opacity = 0;
-    let audio = new Audio("audio/pickup.mp3");
-    audio.play();
     e.dataTransfer.setData("text", e.target.id);
+      playSound(PICKUP_SFX);
   }
 
   /**
@@ -189,9 +199,8 @@
    * @param  {event} e - drag event
    */
   function boxDragEnd() {
-    let audio = new Audio("audio/dropdown.mp3");
-    audio.play();
     this.style.opacity = 1;
+    playSound(DROP_SFX);
   }
 
   /**
@@ -200,7 +209,7 @@
    */
   function dragoverDeleteZone(e) {
     e.preventDefault();
-    e.target.src = "image/trashcan_open.png";
+    e.target.src = BIN_OPEN;
   }
 
   /**
@@ -209,7 +218,7 @@
    */
   function dragleaveDeleteZone(e) {
     e.preventDefault();
-    e.target.src = "image/trashcan_close.png";
+    e.target.src = BIN_CLOSED;
   }
 
   /**
@@ -218,7 +227,7 @@
    */
   function deleteBox(e) {
     e.preventDefault();
-    e.target.src = "image/trashcan_close.png";
+    e.target.src = BIN_CLOSED;
     let data = e.dataTransfer.getData("text");
     document.getElementById(data).remove();
     refreshBoxId();
@@ -235,8 +244,7 @@
     setupBoxDrag(box);
     id("boxes-container").appendChild(box);
     refreshBoxId();
-    let audio = new Audio("audio/pickup.mp3");
-    audio.play();
+    playSound(PICKUP_SFX);
   }
 
   /**
@@ -276,5 +284,14 @@
    */
   function id(id) {
     return document.getElementById(id);
+  }
+
+  /**
+   * Plays the sound file in the given path
+   * @param  {string} path - path to the sound file
+   */
+  function playSound(path) {
+    let audio = new Audio(path);
+    audio.play();
   }
 })();

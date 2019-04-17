@@ -7,6 +7,8 @@
   /* Add a function that is called when the window is loaded */
   window.addEventListener("load", initialize);
 
+  /* ------------------------------------ Initialization ---------------------------------- */
+
   /**
    * Initializes event listeners, sets up container.
    */
@@ -26,7 +28,7 @@
     updateAxis();
   }
 
-  //
+  /* --------------------------------------- Box Drag ------------------------------------- */
 
   function setupBoxDrag(box) {
     box.addEventListener("drag", boxDrag);
@@ -67,8 +69,6 @@
     refreshBoxId();
   }
 
-  //
-
   function addBox() {
     let box = document.createElement("div");
     box.classList.add("box");
@@ -87,6 +87,8 @@
       boxes[i].id = "box-" + i;
     }
   }
+
+  /* ------------------------------------ Initialization ---------------------------------- */
 
   /**
    * Updates the style of the flex container with the CSS in container input
@@ -222,7 +224,7 @@
    */
   function addProperty(label, input) {
     console.log(label.parentElement.dataset["property"] + ": " + label.innerText);
-    let propertyRegex = new RegExp(`(${label.parentElement.dataset["property"]} *: *)[\\w-]*`);
+    let propertyRegex = new RegExp(`(${label.parentElement.dataset["property"]} *: *)[\\w-%]*`);
     console.log(propertyRegex);
     if(propertyRegex.test(id(input).value)) {
       id(input).value = id(input).value.replace(propertyRegex, `$1${label.innerText}`);

@@ -1,15 +1,24 @@
-//
-//
-//
+// Add interavtivity to the website through collapsables and applies
+// styles in the textarea editors to the container and items on the right
+// of the page.
 
-"use strict";
 (function() {
-
+  "use strict";
+  /* Add a function that is called when the window is loaded */
   window.addEventListener("load", initialize);
 
+  /**
+   * Initializes event listeners, sets up container.
+   */
   function initialize() {
-    $("container-input").addEventListener("input", updateContainer);
-    $("item-input").addEventListener("input", updateItem);
+    id("container-input").addEventListener("input", updateContainer);
+    id("item-input").addEventListener("input", updateItem);
+    id("boxes-container").addEventListener("dblclick", addBox);
+
+    id("delete-drop").addEventListener("dragover", dragoverDeleteZone);
+    id("delete-drop").addEventListener("dragleave", dragleaveDeleteZone);
+    id("delete-drop").addEventListener("drop", deleteBox);
+
     setupCollapse();
     setupValueButtons();
     setupBoxes();
@@ -17,60 +26,144 @@
     updateAxis();
   }
 
+  //
+
+  function setupBoxDrag(box) {
+    box.addEventListener("drag", boxDrag);
+    box.addEventListener("dragstart", boxDragStart);
+    box.addEventListener("dragend", boxDragEnd);
+  }
+
+  function boxDrag(e) {
+    console.log("Drag");
+  }
+
+  function boxDragStart(e) {
+    this.style.opacity = 0;
+    e.dataTransfer.setData("text", e.target.id);
+  }
+
+  function boxDragEnd(e) {
+    this.style.opacity = 1;
+  }
+
+  function dragoverDeleteZone(e) {
+    e.target.src = "image/trashcan_open.png";
+    e.preventDefault();
+  }
+
+  function dragleaveDeleteZone(e) {
+    e.target.src = "image/trashcan_close.png";
+    e.preventDefault();
+  }
+
+  function deleteBox(e) {
+    console.log("Drop");
+    e.target.src = "image/trashcan_close.png";
+    e.preventDefault();
+    console.log(e.dataTransfer);
+    let data = e.dataTransfer.getData("text");
+    document.getElementById(data).remove();
+    refreshBoxId();
+  }
+
+  //
+
+  function addBox() {
+    let box = document.createElement("div");
+    box.classList.add("box");
+    box.draggable = true;
+    box.innerText = id("boxes-container").childElementCount;
+    box.addEventListener("click", toggleSelect);
+    setupBoxDrag(box);
+    id("boxes-container").appendChild(box);
+    refreshBoxId();
+  }
+
+  function refreshBoxId() {
+    let boxes = document.querySelectorAll(".box");
+    for (let i = 0; i < boxes.length; i++) {
+      boxes[i].innerText = i;
+      boxes[i].id = "box-" + i;
+    }
+  }
+
+  /**
+   * Updates the style of the flex container with the CSS in container input
+   */
   function updateContainer() {
-    $("container-style").innerText = "#boxes-container {" + $("container-input").value + "}";
+    id("container-style").innerText = "#boxes-container {" + id("container-input").value + "}";
     updateAxis();
   }
 
+  /**
+   * Updates the style of the flex items with the CSS in the selected input
+   */
   function updateItem() {
-    $("item-style").innerText = ".selected {" + $("item-input").value + "}";
+    id("item-style").innerText = ".selected {" + id("item-input").value + "}";
   }
 
+  /**
+   * Updates the axis around the box based on the flex-direction and flex-wrap applied
+   */
   function updateAxis() {
-    let wrap = window.getComputedStyle($("boxes-container")).flexWrap;
-    switch (window.getComputedStyle($("boxes-container")).flexDirection) {
-      case "row-reverse":
-        setAxis("horizontal", "arrow-head-left", "", "main axis", "red");
-        if(wrap !== "wrap-reverse") {
-          setAxis("vertical", "", "arrow-head-down", "cross axis", "blue");
-        } else {
-          setAxis("vertical", "arrow-head-up", "", "cross axis", "blue");
-        }
-        break;
+    let container = id("boxes-container");
+    let computedStyle = window.getComputedStyle(container);
+    let normalWrap = computedStyle.flexWrap !== "wrap-reverse";
+    switch (computedStyle.flexDirection) {
       case "column":
-        if(wrap !== "wrap-reverse") {
-          setAxis("horizontal", "", "arrow-head-right", "cross axis", "blue");
+        setAxis("vertical", "", "arrow-head-down", true);
+        if(normalWrap) {
+          setAxis("horizontal", "", "arrow-head-right", false);
         } else {
-          setAxis("horizontal", "arrow-head-left", "", "cross axis", "blue");
+          setAxis("horizontal", "arrow-head-left", "", false);
         }
-        setAxis("vertical", "", "arrow-head-down", "main axis", "red");
         break;
       case "column-reverse":
-        if(wrap !== "wrap-reverse") {
-          setAxis("horizontal", "", "arrow-head-right", "cross axis", "blue");
+        setAxis("vertical", "arrow-head-up", "", true);
+        if(normalWrap) {
+          setAxis("horizontal", "", "arrow-head-right", false);
         } else {
-          setAxis("horizontal", "arrow-head-left", "", "cross axis", "blue");
+          setAxis("horizontal", "arrow-head-left", "", false);
         }
-        setAxis("vertical", "arrow-head-up", "", "main axis", "red");
+        break;
+      case "row-reverse":
+        setAxis("horizontal", "arrow-head-left", "", true);
+        if(normalWrap) {
+          setAxis("vertical", "", "arrow-head-down", false);
+        } else {
+          setAxis("vertical", "arrow-head-up", "", false);
+        }
         break;
       default:
-        setAxis("horizontal", "", "arrow-head-right", "main axis", "red");
-        if(wrap !== "wrap-reverse") {
-          setAxis("vertical", "", "arrow-head-down", "cross axis", "blue");
+        setAxis("horizontal", "", "arrow-head-right", true);
+        if(normalWrap) {
+          setAxis("vertical", "", "arrow-head-down", false);
         } else {
-          setAxis("vertical", "arrow-head-up", "", "cross axis", "blue");
+          setAxis("vertical", "arrow-head-up", "", false);
         }
     }
   }
 
-  function setAxis(axis, first, last, axisLabel, color) {
-    $(axis).firstElementChild.className = first;
-    $(axis).lastElementChild.className = last;
-    $(axis).className = "";
-    $(axis).querySelector("span").innerText = axisLabel;
-    $(axis).classList.add(color);
+  /**
+   * Sets the given axis's first and last element to the given class to change their direction
+   * and labels it with the given label
+   *
+   * @param  {string}  axis     the id of the axis to change
+   * @param  {string}  first    the class to apply to the first element
+   * @param  {string}  last     the class to apply to the last element
+   * @param  {boolean} mainAxis if the axis is the main axis
+   */
+  function setAxis(axis, first, last, mainAxis) {
+    id(axis).firstElementChild.className = first;
+    id(axis).lastElementChild.className = last;
+    id(axis).className = mainAxis ? "red" : "blue";
+    id(axis).querySelector("span").innerText = mainAxis ? "main axis" : "cross axis";
   }
 
+  /**
+   * Sets up event listeners for the collapsables
+   */
   function setupCollapse() {
     let coll = document.querySelectorAll(".collapse");
     for (let i = 0; i < coll.length; i++) {
@@ -78,40 +171,74 @@
     }
   }
 
+  /**
+   * Sets up event listeners for the boxes
+   */
   function setupBoxes() {
     let boxes = document.querySelectorAll(".box");
     for (let i = 0; i < boxes.length; i++) {
       boxes[i].addEventListener("click", toggleSelect);
+      boxes[i].id = "box-" + i;
+      setupBoxDrag(boxes[i]);
     }
   }
 
+  /**
+   * Sets up value buttons to add CSS to appropriate editors
+   */
   function setupValueButtons() {
-    let btns = document.querySelectorAll(".value-btn");
-    for (let i = 0; i < btns.length; i++) {
-      btns[i].addEventListener("click", addProperty);
+    let contain = document.querySelectorAll("#container-flex-properties .value-btn");
+    for (let i = 0; i < contain.length; i++) {
+      contain[i].addEventListener("click", function() { addProperty(contain[i], "container-input"); });
+    }
+
+    let items = document.querySelectorAll("#item-flex-properties .value-btn");
+    for (let j = 0; j < items.length; j++) {
+      items[j].addEventListener("click", function() { addProperty(items[j], "item-input"); });
     }
   }
 
+  /**
+   * Toggles the collapsable, showing/hiding it's content
+   */
   function toggleCollapse() {
+    this.classList.toggle("active");
     let content = this.nextElementSibling;
     content.style.display = content.style.display === "block" ? "none" : "block";
   }
 
+  /**
+   * Toggles boxes between the selected and deselected state
+   */
   function toggleSelect() {
     this.classList.toggle("selected");
   }
 
-  function addProperty() {
-    let propertyRegex = new RegExp(`(${this.parentElement.dataset["property"]} *: *)[\\w-]*`);
-    if(propertyRegex.test($("container-input").value)) {
-      $("container-input").value = $("container-input").value.replace(propertyRegex, `$1${this.innerText}`);
+  /**
+   * Adds the property value stored in the buttons to the editor
+   *
+   * @param  {object} label label button that was clicked on
+   * @param  {string} input textarea editor to append style to
+   */
+  function addProperty(label, input) {
+    console.log(label.parentElement.dataset["property"] + ": " + label.innerText);
+    let propertyRegex = new RegExp(`(${label.parentElement.dataset["property"]} *: *)[\\w-]*`);
+    console.log(propertyRegex);
+    if(propertyRegex.test(id(input).value)) {
+      id(input).value = id(input).value.replace(propertyRegex, `$1${label.innerText}`);
     } else {
-      $("container-input").value += "\n" + this.parentElement.dataset["property"] + ": " + this.innerText + ";";
+      id(input).value += "\n" + label.parentElement.dataset["property"] + ": " + label.innerText + ";";
     }
     updateContainer();
+    updateItem();
   }
 
-  function $(id) {
+  /**
+   * Returns the element in the document with the given id
+   *
+   * @param  {string} id id of the element to return
+   */
+  function id(id) {
     return document.getElementById(id);
   }
 })();

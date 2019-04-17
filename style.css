@@ -20,14 +20,16 @@ main {
 
 #flex-desc {
   height: 75vh;
-  min-width: 45vw;
+  width: 45vw;
   overflow-y: scroll;
+  scroll-behavior: smooth;
   padding: 2%;
   margin-right: 5vw;
 }
 
 .collapse-content {
   display: none;
+  margin: 4pt 0;
 }
 
 /* Typography */
@@ -38,12 +40,23 @@ label {
 }
 
 label, p, textarea, pre {
-  font-size: 14pt;
+  font-size: 12pt;
+  line-height: 18pt;
 }
 
 h1 {
   text-align: center;
 }
+
+h2 {
+  font-size: 14pt;
+  background-color: gray;
+}
+
+h3 {
+  font-size: 12pt;
+}
+
 
 /* Box section layout */
 
@@ -59,7 +72,24 @@ h1 {
   font-size: 20pt;
   border: 5pt solid silver;
   overflow: auto;
+  position: relative;
   resize: both;
+  /*background: gray url("image/resize_handle.png") no-repeat right bottom;*/
+}
+
+#boxes-container::after {
+  content: '';
+  position: absolute;
+  right: 0;
+  bottom: 0;
+
+  width: 20px;
+  height: 20px;
+  user-select: none;
+  background-image: url("image/resize_handle.png");
+  background-repeat: no-repeat;
+  background-size: contain;
+  cursor: nwse-resize;
 }
 
 .box {
@@ -69,6 +99,8 @@ h1 {
   line-height: 50px;
   border: 5pt solid black;
   cursor: pointer;
+  transition: all 0.2s ease-out, opacity 0.01s, background-color 0s;
+  user-select: none;
 }
 
 .red, .box:nth-child(even) {
@@ -84,25 +116,28 @@ h1 {
 }
 
 .selected {
-  box-shadow: inset 0px 0px 0px 5px white;
+  box-shadow: inset 0 0 0 5pt white;
 }
 
 label.red, label.blue, label.gray, .collapse:hover {
-  cursor: pointer;
   user-select: none;
-  transition: all 0.2s ease-in;
+  transition: all 0.1s ease-in;
   color: white;
 }
 
-label.red:hover {
+label.value-btn:hover, .collapse:hover  {
+  cursor: pointer;
+}
+
+label.red.value-btn:hover {
  background-color: #f37781;
 }
 
-label.blue:hover {
+label.blue.value-btn:hover {
   background-color: #1ebfe7;
 }
 
-label.gray:hover {
+label.gray.value-btn:hover {
   background-color: #b9b9b9;
 }
 
@@ -110,7 +145,7 @@ label.gray:hover {
 
 .collapse {
   margin: 4pt 0;
-  padding: 10px;
+  padding: 5px;
 }
 
 .collapse:hover {
@@ -122,6 +157,16 @@ label.gray:hover {
   content: 'v';
   margin-left: 16pt;
   float: right;
+}
+
+pre.collapse::after {
+  content: '... }';
+  margin-left: 16pt;
+  float: right;
+}
+
+pre.active::after {
+  content: '';
 }
 
 /* Arrows */
@@ -186,9 +231,10 @@ label.gray:hover {
 textarea {
   box-sizing: border-box;
   width: 100%;
-  padding: 0 0 0 14pt;
+  padding: 0 0 0 12pt;
 
   resize: none;
+
 
   background-color: #101010;
 
@@ -203,4 +249,17 @@ textarea {
 
 textarea:focus {
   border-color: gray;
+}
+
+textarea::selection {
+  background-color: silver;
+}
+
+/* Garbage Can */
+#delete-drop {
+  width: 50px;
+  height: 50px;
+  position: absolute;
+  right: 10px;
+  top: 10px;
 }

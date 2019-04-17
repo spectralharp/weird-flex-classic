@@ -1,14 +1,13 @@
 <!DOCTYPE html>
 <html lang="en">
 <!--
-  CSE 154
-  Lecture 5
-  HTML for box layout practice
+  Weird Flex is an interactive flexbox testing ground
 -->
 <head>
   <meta charset="UTF-8">
-  <title>Weird Flex 💪: Flexbox Playground</title>
+  <title>Weird Flex: Flexbox Playground</title>
   <link rel="stylesheet" href="style.css">
+  <link rel="icon" href="favicon.ico" type="image/x-icon">
   <style id="container-style"></style>
   <style id="item-style"></style>
   <script src="flex.js"></script>
@@ -20,34 +19,26 @@
   </header>
   <main>
     <section id="flex-desc">
-
-      <!-- CSS editor -->
-      <h2 class="collapse">CSS</h2>
-      <div class="collapse-content">
-        <pre>#boxes-container {</pre>
-        <textarea id="container-input" rows="8">display: flex;</textarea>
-        <pre>}</pre>
-        <pre>.selected {</pre>
-        <textarea id="item-input" rows="8"></textarea>
-        <pre>}</pre>
-      </div>
-
       <!-- Flexbox property descriptions -->
       <h2 class="collapse">Flex Container Properties</h2>
-      <div class="collapse-content">
+      <div class="collapse-content" id="container-flex-properties">
 
         <h3 class="collapse">Orientation</h3>
         <div class="collapse-content">
-          <p class="collapse"><label class="gray">flex-direction</label> : determines the main axis of the container</p>
-          <p class="collapse-content" data-property="flex-direction">Values :
+          <p class="collapse"><label class="gray">flex-direction</label> :
+            determines the main axis of the container
+          </p>
+          <p class="collapse-content" data-property="flex-direction">
             <label class="red value-btn">row</label>
             <label class="red value-btn">row-reverse</label>
             <label class="red value-btn">column</label>
             <label class="red value-btn">column-reverse</label>
           </p>
 
-          <p class="collapse"><label class="gray">flex-wrap</label> : determines whether the items wrap to a seperate line</p>
-          <p class="collapse-content" data-property="flex-wrap">Values :
+          <p class="collapse"><label class="gray">flex-wrap</label> :
+            determines whether the items wrap to a seperate line
+          </p>
+          <p class="collapse-content" data-property="flex-wrap">
             <label class="gray value-btn">wrap</label>
             <label class="gray value-btn">no-wrap</label>
             <label class="blue value-btn">wrap-reverse</label>
@@ -56,8 +47,10 @@
 
         <h3 class="collapse">Alignment</h3>
         <div class="collapse-content">
-          <p class="collapse"><label class="red">justify-content</label> : align items by major axis</p>
-          <p class="collapse-content" data-property="justify-content">Values :
+          <p class="collapse"><label class="red">justify-content</label> :
+            align items by major axis
+          </p>
+          <p class="collapse-content" data-property="justify-content">
             <label class="gray value-btn">flex-start</label>
             <label class="gray value-btn">flex-end</label>
             <label class="gray value-btn">center</label>
@@ -66,17 +59,21 @@
             <label class="gray value-btn">space-evenly</label>
           </p>
 
-          <p class="collapse"><label class="blue">align-items</label> : align all items by cross axis</p>
-          <p class="collapse-content" data-property="align-items">Values :
+          <p class="collapse"><label class="blue">align-items</label> :
+            align all items by cross axis
+          </p>
+          <p class="collapse-content" data-property="align-items">
             <label class="gray value-btn">flex-start</label>
             <label class="gray value-btn">flex-end</label>
             <label class="gray value-btn">center</label>
-            <label class="gray value-btn">stretch</label>
             <label class="gray value-btn">baseline</label>
+            <label class="gray value-btn">stretch</label>
           </p>
 
-          <p class="collapse"><label class="blue">align-content</label> : align lines of items by cross axis</p>
-          <p class="collapse-content" data-property="align-content">Values :
+          <p class="collapse"><label class="blue">align-content</label> :
+            align lines of items by cross axis
+          </p>
+          <p class="collapse-content" data-property="align-content">
             <label class="gray value-btn">flex-start</label>
             <label class="gray value-btn">flex-end</label>
             <label class="gray value-btn">center</label>
@@ -88,6 +85,113 @@
         </div>
       </div>
 
+      <h2 class="collapse">Flex Item Properties</h2>
+      <div class="collapse-content" id="item-flex-properties">
+
+        <h3 class="collapse">Alignment</h3>
+        <div class="collapse-content">
+          <p class="collapse">
+            <label class="blue">align-self</label> :
+            align selected item by cross axis
+          </p>
+          <p class="collapse-content" data-property="align-self">
+            <label class="gray value-btn">flex-start</label>
+            <label class="gray value-btn">flex-end</label>
+            <label class="gray value-btn">center</label>
+            <label class="gray value-btn">baseline</label>
+            <label class="gray value-btn">stretch</label>
+          </p>
+
+          <p class="collapse">
+            <label class="gray">order</label> :
+            changes the order of selected item in the container
+          </p>
+          <p class="collapse-content" data-property="order">
+            <label class="gray value-btn">-1</label>
+            <label class="gray value-btn">0</label>
+            <label class="gray value-btn">1</label>
+          </p>
+        </div>
+
+        <h3 class="collapse">Flexibility</h3>
+        <div class="collapse-content">
+          <p class="collapse">
+            <label class="gray">flex-grow</label> :
+            sets the flex grow factor
+          </p>
+          <p class="collapse-content" data-property="flex-grow">
+            <label class="gray value-btn">0</label>
+            <label class="gray value-btn">1</label>
+          </p>
+
+          <p class="collapse"><label class="gray">flex-shrink</label> :
+            sets the flex shrink factor
+          </p>
+          <p class="collapse-content" data-property="flex-shrink">
+            <label class="gray value-btn">1</label>
+            <label class="gray value-btn">0</label>
+          </p>
+
+          <p class="collapse"><label class="gray">flex-basis</label> :
+            sets the flex basis
+          </p>
+          <p class="collapse-content" data-property="flex-basis">
+            <label class="gray value-btn">content</label>
+          </p>
+        </div>
+      </div>
+
+      <!-- CSS editor -->
+      <h2 class="collapse active">CSS</h2>
+      <div class="collapse-content" style="display: block;">
+        <pre class="collapse active">#container {</pre>
+        <div class="collapse-content" style="display: block;">
+          <textarea id="container-input" rows="8">display: flex;</textarea>
+          <pre>}</pre>
+        </div>
+
+        <pre class="collapse">.selected {</pre>
+        <div class="collapse-content">
+          <textarea id="item-input" rows="8">order: 0;</textarea>
+          <pre>}</pre>
+        </div>
+      </div>
+
+      <!-- Intro -->
+      <h2 class="collapse">About</h2>
+      <div class="collapse-content">
+        <h3>What's this?</h3>
+        <p>
+          This is an interactive website that allows you to test out different CSS flexbox
+          property.
+        </p>
+        <h3>CSS tab</h3>
+        <p>
+          The CSS tab contains two text areas, edit the CSS in
+          <label class="gray">#container</label>
+          to style the gray box container on the right. Clicking on the
+          boxes labeled 0-5 the <label class="gray">.selected</label>
+          class on them, allowing them to be styled by the
+          <label class="gray">.selected</label> text area.
+        </p>
+        <h3>Flex Container</h3>
+        <p>
+          The flex container is the gray box on the right of the screen. The
+          <label class="red">main</label> and <label class="blue">cross</label>
+          axis are labeled on the side of the box, and updates based on the
+          flexbox properties applied. Property values that affects the
+          <label class="red">main</label> axis are labeled in red
+          and values that affects the
+          <label class="blue">cross</label> axis are labeled in blue.
+          <hr>
+          You can double click on the container to add boxes or delete boxes
+          by dragging them to the trash can on the top right corner.
+          <hr>
+          Clicking on boxes toggles the <label class="gray">.selected</label>
+          class on them, allowing them to be styled by the
+          <label class="gray">.selected</label> text area in the CSS tab.
+        </p>
+      </div>
     </section>
 
     <section id="flex-view">
@@ -101,12 +205,12 @@
       </div>
       <!-- Box area -->
       <div id="boxes-container" class="gray">
-        <div class="box">0</div>
-        <div class="box">1</div>
-        <div class="box">2</div>
-        <div class="box">3</div>
-        <div class="box">4</div>
-        <div class="box">5</div>
+        <div class="box" draggable="true">0</div>
+        <div class="box" draggable="true">1</div>
+        <div class="box" draggable="true">2</div>
+        <div class="box" draggable="true">3</div>
+        <div class="box" draggable="true">4</div>
+        <div class="box" draggable="true">5</div>
       </div>
 
       <div id="horizontal">
@@ -118,6 +222,8 @@
       </div>
 
     </section>
+
+    <img id="delete-drop" src="image/trashcan_close.png">
 
   </main>
 

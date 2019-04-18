@@ -11,6 +11,10 @@
   const PICKUP_SFX = "audio/pickup.mp3";
   // Draggable drop sound effect
   const DROP_SFX = "audio/dropdown.mp3";
+  // Draggable drop delete sound effect
+  const BIN_SFX = "audio/trash.mp3";
+  // Add box sound effect
+  const ADD_SFX = "audio/add.mp3";
   // Trash can default image path
   const BIN_CLOSED = "image/trashcan_close.png";
   // Trash can drag over image path
@@ -31,6 +35,11 @@
     id("delete-drop").addEventListener("dragover", dragoverDeleteZone);
     id("delete-drop").addEventListener("dragleave", dragleaveDeleteZone);
     id("delete-drop").addEventListener("drop", deleteBox);
+
+    id("get-url-btn").addEventListener("click", getCSSURL);
+
+    id("container-input").value = getURLParam("container", "");
+    id("item-input").value = getURLParam("selected", "");
 
     setupCollapse();
     setupValueButtons();
@@ -191,7 +200,7 @@
   function boxDragStart(e) {
     this.style.opacity = 0;
     e.dataTransfer.setData("text", e.target.id);
-      playSound(PICKUP_SFX);
+    playSound(PICKUP_SFX);
   }
 
   /**
@@ -227,6 +236,7 @@
    */
   function deleteBox(e) {
     e.preventDefault();
+    playSound(BIN_SFX);
     e.target.src = BIN_CLOSED;
     let data = e.dataTransfer.getData("text");
     document.getElementById(data).remove();
@@ -237,6 +247,7 @@
    * Adds a box to the container
    */
   function addBox() {
+    playSound(ADD_SFX);
     let box = document.createElement("div");
     box.classList.add("box");
     box.draggable = true;
@@ -244,7 +255,6 @@
     setupBoxDrag(box);
     id("boxes-container").appendChild(box);
     refreshBoxId();
-    playSound(PICKUP_SFX);
   }
 
   /**
@@ -274,6 +284,46 @@
    */
   function toggleSelect() {
     this.classList.toggle("selected");
+  }
+
+  /* ------------------------------------------- URL -------------------------------------- */
+
+  // Gimmiky way to add this function but I feel like this function would be useful
+
+  function getURLParam(param, defaultValue) {
+    let result = defaultValue;
+    if(window.location.href.indexOf(param) !== -1) {
+      result = decodeURI(getUrlVars()[param]);
+    }
+    return result;
+  }
+
+  function getUrlVars() {
+    let vars = {};
+    let parts = window.location.href.replace(/[?&]+([^=&]+)=([^&]*)/gi,
+      function(match, key, value) {
+        vars[key] = value;
+      });
+    return vars;
+  }
+
+  function getCSSURL() {
+    let url = "https://spectralharp.github.io/weird-flex/";
+    let container = id("container-input").value.length !== 0 ? "container=" + encodeURI(id("container-input").value) : "";
+    let item = id("item-input").value.length !== 0 ? "selected=" + encodeURI(id("item-input").value) : "";
+    let add = "";
+    if(container.length !== 0 || item.length !== 0) {
+      add += "?"
+      if(container.length !== 0) {
+        add += container;
+        if(item.length !== 0) {
+          add += "&" + item;
+        }
+      } else {
+        add += item;
+      }
+    }
+    id("url-output").value = url + add;
   }
 
   /* ----------------------------------------- Helper ------------------------------------- */

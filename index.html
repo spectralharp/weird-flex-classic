@@ -15,7 +15,7 @@
 
 <body>
   <header>
-    <h1>Weird Flex 💪</h1>
+    <h1>Weird Flex <span id="muscle">💪</span></h1>
   </header>
   <main>
     <section id="flex-desc">
@@ -30,6 +30,11 @@
         <a href="https://github.com/spectralharp/weird-flex">
           <img src="image/github_icon.png" alt="GitHub">
         </a>
+        <br>
+        <div id="url-bar">
+          <input type="text" id="url-output">
+          <button id="get-url-btn">Get URL</button>
+        </div>
         <h3>CSS tab</h3>
         <p>
           The CSS tab contains two text areas, edit the CSS in
@@ -77,7 +82,14 @@
       <!-- Flexbox property descriptions -->
       <h2 class="collapse">Flex Container Properties</h2>
       <div class="collapse-content" id="container-flex-properties">
-
+        <p class="collapse">
+          <label class="gray">display</label> :
+          to start using flexbox, you need to set the display of the container to flex
+        </p>
+        <p class="collapse-content" data-property="display">
+          <label class="gray value-btn">block</label>
+          <label class="gray value-btn">flex</label>
+        </p>
         <h3 class="collapse">Orientation</h3>
         <div class="collapse-content">
           <p class="collapse">
@@ -210,20 +222,20 @@
       <div class="collapse-content" style="display: block;">
         <pre class="collapse active">#container {</pre>
         <div class="collapse-content" style="display: block;">
-          <textarea id="container-input" rows="6">display: flex;</textarea>
+          <textarea id="container-input" rows="6"></textarea>
           <pre>}</pre>
         </div>
 
         <pre class="collapse">.selected {</pre>
         <div class="collapse-content">
-          <textarea id="item-input" rows="6">order: 0;</textarea>
+          <textarea id="item-input" rows="6"></textarea>
           <pre>}</pre>
         </div>
       </div>
     </section>
 
     <section id="flex-view">
-
+      <!-- Vertical axis -->
       <div id="vertical">
         <div class="arrow-body-vertical"></div>
         <div class="arrow-body-vertical"></div>
@@ -240,7 +252,7 @@
         <div class="box" draggable="true">4</div>
         <div class="box" draggable="true">5</div>
       </div>
-
+      <!-- Horizontal axis -->
       <div id="horizontal">
         <div class="arrow-body-horizontal"></div>
         <div class="arrow-body-horizontal"></div>
@@ -248,7 +260,6 @@
         <div class="arrow-body-horizontal"></div>
         <div class="arrow-head-right"></div>
       </div>
-
     </section>
 
     <img id="add-box" src="image/plus.png" draggable="false">

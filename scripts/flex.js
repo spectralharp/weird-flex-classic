@@ -32,7 +32,7 @@
   function initialize() {
     window.addEventListener("resize", setBound);
     window.addEventListener("mouseup", updateSlider);
-    
+
     id("container-input").addEventListener("input", updateContainer);
     id("item-input").addEventListener("input", updateItem);
     id("add-box").addEventListener("click", addBox);
@@ -197,7 +197,7 @@
     if (regex.test(id(input).value)) {
       id(input).value = id(input).value.replace(regex, `$1${label.innerText}`);
     } else {
-      id(input).value += "\n" + property + ": " + label.innerText + ";";
+      id(input).value += (id(input).value === "" ? "" : "\n") + property + ": " + label.innerText + ";";
     }
     updateContainer();
     updateItem();
@@ -327,8 +327,6 @@
 
   function updateSlider() {
     let style = window.getComputedStyle(id("boxes-container"));
-    console.log(pxToVw(parseInt(style.width)));
-    console.log(pxToVh(parseInt(style.height)));
     id("width-slider").value = pxToVw(parseInt(style.width));
     id("height-slider").value = pxToVh(parseInt(style.height));
   }

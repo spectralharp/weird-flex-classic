@@ -2,7 +2,6 @@
 @import url('https://fonts.googleapis.com/css?family=Lato|Ubuntu+Mono');
 
 /* Layout */
-
 body {
   color: white;
   background-color: #434343;
@@ -33,7 +32,6 @@ main {
 }
 
 /* Typography */
-
 button, input, label {
   padding: 1px 5px;
   border-radius: 2px;
@@ -58,7 +56,6 @@ h3 {
 }
 
 /* Box section layout */
-
 #flex-view {
   /* Ironic, I know */
   display: grid;
@@ -80,7 +77,6 @@ h3 {
 }
 
 /* Resize handle */
-
 #boxes-container::after {
   content: '';
   position: absolute;
@@ -148,7 +144,6 @@ label.gray.value-btn:hover {
 }
 
 /* URL bar */
-
 button, input {
   border: none;
 }
@@ -163,7 +158,6 @@ input {
 }
 
 /* Collapsable */
-
 .collapse {
   margin: 2px 0;
   padding: 5px;
@@ -191,7 +185,6 @@ pre.active::after {
 }
 
 /* Arrows */
-
 #horizontal, #vertical {
   display: flex;
   align-items: center;
@@ -248,7 +241,6 @@ pre.active::after {
 }
 
 /* Textarea */
-
 pre, textarea {
   font-family: 'Ubuntu Mono', monospace;
 }
@@ -275,18 +267,17 @@ textarea::selection {
 }
 
 /* Garbage Can */
-
 #delete-drop {
   position: absolute;
   top: 80px;
   right: 10px;
   width: 50px;
   height: 50px;
-  cursor: pointer;
-  -webkit-user-select: none;
   -moz-user-select: none;
   -ms-user-select: none;
+  -webkit-user-select: none;
   user-select: none;
+  cursor: pointer;
 }
 
 /* Add button */
@@ -297,11 +288,11 @@ textarea::selection {
   width: 50px;
   height: 50px;
   transition: all 0.2s;
-  cursor: pointer;
-  -webkit-user-select: none;
   -moz-user-select: none;
   -ms-user-select: none;
+  -webkit-user-select: none;
   user-select: none;
+  cursor: pointer;
 }
 
 #add-box:hover {
@@ -309,42 +300,39 @@ textarea::selection {
 }
 
 /* Settings */
-
 ul {
   list-style: none;
 }
 
 input[type=range] {
-  -webkit-appearance: none; /* Hides the slider so that custom slider can be made */
-  width: 80%; /* Specific width is required for Firefox. */
-  background: transparent; /* Otherwise white in Chrome */
-  margin: 0 auto;
   display: block;
+  -webkit-appearance: none;
+  width: 80%;
+  margin: 0 auto;
+  background: transparent;
 }
 
 input[type=range]::-webkit-slider-thumb {
   -webkit-appearance: none;
-  height: 20px;
   width: 20px;
-  border-radius: 50%;
-  background: white;
-  cursor: pointer;
+  height: 20px;
   margin-top: -6px;
-}
-
-/* All the same stuff for Firefox */
-input[type=range]::-moz-range-thumb {
-  height: 20px;
-  width: 20px;
   border-radius: 50%;
   background: white;
   cursor: pointer;
 }
 
-/* All the same stuff for IE */
-input[type=range]::-ms-thumb {
-  height: 20px;
+input[type=range]::-moz-range-thumb {
   width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  background: white;
+  cursor: pointer;
+}
+
+input[type=range]::-ms-thumb {
+  width: 20px;
+  height: 20px;
   border-radius: 50%;
   background: white;
   cursor: pointer;
@@ -357,9 +345,9 @@ input[type=range]:focus {
 input[type=range]::-webkit-slider-runnable-track {
   width: 100%;
   height: 8px;
-  cursor: pointer;
-  background: gray;
   border-radius: 4px;
+  background: gray;
+  cursor: pointer;
 }
 
 input[type=range]:focus::-webkit-slider-runnable-track {
@@ -369,24 +357,23 @@ input[type=range]:focus::-webkit-slider-runnable-track {
 input[type=range]::-moz-range-track {
   width: 100%;
   height: 8px;
-  cursor: pointer;
-  background: gray;
   border-radius: 4px;
+  background: gray;
+  cursor: pointer;
 }
 
 input[type=range]::-ms-track {
   width: 100%;
   height: 8px;
-  cursor: pointer;
-  /* Hides the slider so custom styles can be added */
-  background: transparent;
-  border-color: transparent;
   color: transparent;
+  border-color: transparent;
+  background: transparent;
+  cursor: pointer;
 }
 
 input[type=range]::-ms-fill-lower {
-  background: gray;
   border-radius: 4px;
+  background: gray;
 }
 
 input[type=range]:focus::-ms-fill-lower {
@@ -394,8 +381,8 @@ input[type=range]:focus::-ms-fill-lower {
 }
 
 input[type=range]::-ms-fill-upper {
-  background: gray;
   border-radius: 4px;
+  background: gray;
 }
 
 input[type=range]:focus::-ms-fill-upper {
@@ -406,8 +393,7 @@ input[type=checkbox] {
   transform: scale(1.5);
 }
 
-/* Flexing muscle (v important)*/
-
+/* Flexing muscle (v important) */
 #muscle {
   display: inline-block;
   transform-origin: bottom right;
@@ -427,17 +413,17 @@ input[type=checkbox] {
   }
 }
 
-@media only screen and (max-width: 1280px) {
+@media only screen and (max-width : 1280px) {
   main {
-    flex-direction: column;
     align-items: center;
+    flex-direction: column;
   }
 
   #flex-desc {
-    height: auto;
     width: 90vw;
-    margin-left: auto;
+    height: auto;
     margin-right: auto;
+    margin-left: auto;
     padding: 0;
     overflow-y: visible;
   }
@@ -460,32 +446,30 @@ input[type=checkbox] {
   }
 
   input[type=range]::-webkit-slider-thumb {
-    height: 36px;
     width: 36px;
+    height: 36px;
     margin-top: -14px;
   }
 
-  /* All the same stuff for Firefox */
   input[type=range]::-moz-range-thumb {
-    height: 36px;
     width: 36px;
+    height: 36px;
   }
 
   input[type=range]::-ms-thumb {
-    height: 36px;
     width: 36px;
+    height: 36px;
   }
 
   #flex-view {
     margin-top: 10vh;
   }
 
-  input,
-  textarea {
-    font-size: 16px
+  input, textarea {
+    font-size: 16px;
   }
 
-  label, h4, p, pre, button {
+  button, h4, label, p, pre {
     font-size: 16pt;
     line-height: 25pt;
   }

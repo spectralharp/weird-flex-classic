@@ -1,5 +1,5 @@
 /* CSS for Weird Flex */
-@import "url('https://fonts.googleapis.com/css?family=Lato|Ubuntu+Mono')";
+@import url('https://fonts.googleapis.com/css?family=Lato|Ubuntu+Mono');
 
 /* Layout */
 
@@ -20,7 +20,7 @@ main {
 }
 
 #flex-desc {
-  width: 35vw;
+  width: 40vw;
   height: 75vh;
   margin-right: 5vw;
   padding: 2%;
@@ -67,10 +67,12 @@ h3 {
 
 #boxes-container {
   position: relative;
-  width: 500px;
+  width: 400px;
   min-width: 150px;
-  height: 500px;
+  max-width: 45vw;
+  height: 400px;
   min-height: 150px;
+  max-height: 70vh;
   overflow: auto;
   border: 5pt solid silver;
   font-size: 18pt;
@@ -315,5 +317,38 @@ textarea::selection {
   }
   50% {
     transform: rotate(8deg) scaleX(0.9);
+  }
+}
+
+@media only screen and (max-width: 1280px) {
+  main {
+    flex-direction: column;
+    align-items: center;
+  }
+
+  #flex-desc {
+    height: auto;
+    width: 90vw;
+    margin-left: auto;
+    margin-right: auto;
+    padding: 0;
+    overflow-y: auto;
+  }
+
+  #boxes-container {
+    min-width: 150px;
+    max-width: 80vw;
+    min-height: 150px;
+    max-height: 90vh;
+  }
+
+  #delete-drop {
+    position: fixed;
+    top: 10px;
+    right: 80px;
+  }
+
+  #add-box {
+    position: fixed;
   }
 }

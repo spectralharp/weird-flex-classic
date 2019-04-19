@@ -6,11 +6,11 @@
 <head>
   <meta charset="UTF-8">
   <title>Weird Flex: Flexbox Playground</title>
-  <link rel="stylesheet" href="style/style.min.css">
+  <link rel="stylesheet" href="style/style.css">
   <link rel="icon" href="favicon.ico" type="image/x-icon">
   <style id="container-style"></style>
   <style id="item-style"></style>
-  <script src="scripts/flex.min.js"></script>
+  <script src="scripts/flex.js"></script>
 </head>
 
 <body>
@@ -231,6 +231,25 @@
           <textarea id="item-input" rows="6" aria-label="Selected flex item style input"></textarea>
           <pre>}</pre>
         </div>
+      </div>
+
+      <!-- Settings menu -->
+      <h2 class="collapse active">Settings</h2>
+      <div class="collapse-content">
+        <ul>
+          <li>
+            <h4>Container Width</h4>
+            <input type="range" id="width-slider" aria-label="Flex container width slider" min="0" max="100">
+          </li>
+          <li>
+            <h4>Container Height</h4>
+            <input type="range" id="height-slider" aria-label="Flex container height slider" min="0" max="100">
+          </li>
+          <li>
+            <h4>Mute Sound</h4>
+            <input type="checkbox" id="mute-checkbox" aria-label="Mute sound checkbox">
+          </li>
+        </ul>
       </div>
     </section>
 

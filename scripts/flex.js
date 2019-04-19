@@ -30,25 +30,34 @@
    * Initializes event listeners, sets up container.
    */
   function initialize() {
+    window.addEventListener("resize", setBound);
+    window.addEventListener("mouseup", updateSlider);
+    
     id("container-input").addEventListener("input", updateContainer);
     id("item-input").addEventListener("input", updateItem);
     id("add-box").addEventListener("click", addBox);
 
     id("delete-drop").addEventListener("dragover", dragoverDeleteZone);
     id("delete-drop").addEventListener("dragleave", dragleaveDeleteZone);
-    id("delete-drop").addEventListener("drop", deleteBox);
+    id("delete-drop").addEventListener("drop", dragdropDeleteZone);
+    id("delete-drop").addEventListener("click", deleteLastBox);
 
     id("get-url-btn").addEventListener("click", getCSSURL);
+
+    id("width-slider").addEventListener("input", setSize);
+    id("height-slider").addEventListener("input", setSize);
 
     id("container-input").value = getURLParam("container", "");
     id("item-input").value = getURLParam("selected", "");
 
+    setBound();
     setupCollapse();
     setupValueButtons();
     setupBoxes();
     updateContainer();
     updateAxis();
     updateItem();
+    updateSlider();
   }
 
   /* ----------------------------------------- Setup -------------------------------------- */
@@ -237,13 +246,24 @@
    * Deletes the dropped box
    * @param  {event} e - drag event
    */
-  function deleteBox(e) {
+  function dragdropDeleteZone(e) {
     e.preventDefault();
-    playSound(BIN_SFX);
     e.target.src = BIN_CLOSED;
     let data = e.dataTransfer.getData("text");
-    document.getElementById(data).remove();
+    deleteBox(document.getElementById(data));
+  }
+
+  function deleteBox(box) {
+    if(box === null) {
+      return;
+    }
+    playSound(BIN_SFX);
+    box.remove();
     refreshBoxId();
+  }
+
+  function deleteLastBox() {
+    deleteBox(id("boxes-container").lastElementChild);
   }
 
   /**
@@ -287,6 +307,46 @@
    */
   function toggleSelect() {
     this.classList.toggle("selected");
+  }
+
+  /* -------------------------------------- Size Slider ----------------------------------- */
+
+  function setBound() {
+    let style = window.getComputedStyle(id("boxes-container"));
+    id("width-slider").min = pxToVw(parseInt(style.minWidth));
+    id("width-slider").max = pxToVw(parseInt(style.maxWidth));
+    id("height-slider").min = pxToVh(parseInt(style.minHeight));
+    id("height-slider").max = pxToVh(parseInt(style.maxHeight));
+    updateSlider();
+  }
+
+  function setSize() {
+    id("boxes-container").style.width = vwToPx(id("width-slider").value) + "px";
+    id("boxes-container").style.height = vhToPx(id("height-slider").value) + "px";
+  }
+
+  function updateSlider() {
+    let style = window.getComputedStyle(id("boxes-container"));
+    console.log(pxToVw(parseInt(style.width)));
+    console.log(pxToVh(parseInt(style.height)));
+    id("width-slider").value = pxToVw(parseInt(style.width));
+    id("height-slider").value = pxToVh(parseInt(style.height));
+  }
+
+  function vwToPx(vw) {
+    return vw / 100 * document.documentElement.clientWidth;
+  }
+
+  function pxToVw(px) {
+    return Math.round(px / document.documentElement.clientWidth * 100);
+  }
+
+  function vhToPx(vh) {
+    return vh / 100 * document.documentElement.clientHeight;
+  }
+
+  function pxToVh(px) {
+    return Math.round(px / document.documentElement.clientHeight * 100);
   }
 
   /* ------------------------------------------- URL -------------------------------------- */
@@ -368,7 +428,9 @@
    * @param  {string} path - path to the sound file
    */
   function playSound(path) {
-    let audio = new Audio(path);
-    audio.play();
+    if(!id("mute-checkbox").checked) {
+      let audio = new Audio(path);
+      audio.play();
+    }
   }
 })();

@@ -282,6 +282,11 @@ textarea::selection {
   right: 10px;
   width: 50px;
   height: 50px;
+  cursor: pointer;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
 }
 
 /* Add button */
@@ -293,10 +298,110 @@ textarea::selection {
   height: 50px;
   transition: all 0.2s;
   cursor: pointer;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
 }
 
 #add-box:hover {
   transform: rotate(360deg);
+}
+
+/* Settings */
+
+ul {
+  list-style: none;
+}
+
+input[type=range] {
+  -webkit-appearance: none; /* Hides the slider so that custom slider can be made */
+  width: 80%; /* Specific width is required for Firefox. */
+  background: transparent; /* Otherwise white in Chrome */
+}
+
+input[type=range]::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  height: 20px;
+  width: 20px;
+  border-radius: 50%;
+  background: white;
+  cursor: pointer;
+  margin-top: -6px;
+}
+
+/* All the same stuff for Firefox */
+input[type=range]::-moz-range-thumb {
+  height: 20px;
+  width: 20px;
+  border-radius: 50%;
+  background: white;
+  cursor: pointer;
+}
+
+/* All the same stuff for IE */
+input[type=range]::-ms-thumb {
+  height: 20px;
+  width: 20px;
+  border-radius: 50%;
+  background: white;
+  cursor: pointer;
+}
+
+input[type=range]:focus {
+  outline: none; /* Removes the blue border. You should probably do some kind of focus styling for accessibility reasons though. */
+}
+
+input[type=range]::-webkit-slider-runnable-track {
+  width: 100%;
+  height: 8px;
+  cursor: pointer;
+  background: gray;
+  border-radius: 4px;
+}
+
+input[type=range]:focus::-webkit-slider-runnable-track {
+  background: #029dc3;
+}
+
+input[type=range]::-moz-range-track {
+  width: 100%;
+  height: 8px;
+  cursor: pointer;
+  background: gray;
+  border-radius: 4px;
+}
+
+input[type=range]::-ms-track {
+  width: 100%;
+  height: 8px;
+  cursor: pointer;
+  /* Hides the slider so custom styles can be added */
+  background: transparent;
+  border-color: transparent;
+  color: transparent;
+}
+
+input[type=range]::-ms-fill-lower {
+  background: gray;
+  border-radius: 4px;
+}
+
+input[type=range]:focus::-ms-fill-lower {
+  background: #029dc3;
+}
+
+input[type=range]::-ms-fill-upper {
+  background: gray;
+  border-radius: 4px;
+}
+
+input[type=range]:focus::-ms-fill-upper {
+  background: #029dc3;
+}
+
+input[type=checkbox] {
+  transform: scale(1.5);
 }
 
 /* Flexing muscle (v important)*/

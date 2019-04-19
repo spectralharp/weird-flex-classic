@@ -311,6 +311,10 @@
 
   /* -------------------------------------- Size Slider ----------------------------------- */
 
+
+  /**
+   * Sets the min and max values for size sliders
+   */
   function setBound() {
     let style = window.getComputedStyle(id("boxes-container"));
     id("width-slider").min = pxToVw(parseInt(style.minWidth));
@@ -320,29 +324,55 @@
     updateSlider();
   }
 
+  /**
+   * Sets the size of the flex container to the slider value
+   */
   function setSize() {
     id("boxes-container").style.width = vwToPx(id("width-slider").value) + "px";
     id("boxes-container").style.height = vhToPx(id("height-slider").value) + "px";
   }
 
+  /**
+   * Update the slider's value to the size of the flex container
+   */
   function updateSlider() {
     let style = window.getComputedStyle(id("boxes-container"));
     id("width-slider").value = pxToVw(parseInt(style.width));
     id("height-slider").value = pxToVh(parseInt(style.height));
   }
 
+  /**
+   * Converts unit vw to px
+   * @param  {number} vw - vw to convert
+   * @return {number} number of px represented by the given vw
+   */
   function vwToPx(vw) {
     return vw / 100 * document.documentElement.clientWidth;
   }
 
+  /**
+   * Converts unit px to vw
+   * @param  {number} px - px to convert
+   * @return {number} number of vw represented by the given px
+   */
   function pxToVw(px) {
     return Math.round(px / document.documentElement.clientWidth * 100);
   }
 
+  /**
+   * Converts unit vh to px
+   * @param  {number} vh - vh to convert
+   * @return {number} number of px represented by the given vh
+   */
   function vhToPx(vh) {
     return vh / 100 * document.documentElement.clientHeight;
   }
 
+  /**
+   * Converts unit px to vh
+   * @param  {number} px - px to convert
+   * @return {number} number of vh represented by the given px
+   */
   function pxToVh(px) {
     return Math.round(px / document.documentElement.clientHeight * 100);
   }

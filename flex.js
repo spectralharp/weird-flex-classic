@@ -7,6 +7,8 @@
 
   /* --------------------------------------- Constants ------------------------------------ */
 
+  // URL to github page
+  const URL = "https://spectralharp.github.io/weird-flex/";
   // Draggable pickup sound effect
   const PICKUP_SFX = "audio/pickup.mp3";
   // Draggable drop sound effect
@@ -46,6 +48,7 @@
     setupBoxes();
     updateContainer();
     updateAxis();
+    updateItem();
   }
 
   /* ----------------------------------------- Setup -------------------------------------- */
@@ -92,7 +95,7 @@
 
   /**
    * Sets up event listeners for draggable boxes
-   * @param  {object} box - element to attach event listener to
+   * @param  {HTMLElement} box - element to attach event listener to
    */
   function setupBoxDrag(box) {
     box.addEventListener("dragstart", boxDragStart);
@@ -162,10 +165,10 @@
    * Sets the given axis's first and last element to the given class to change their direction
    * and labels it with the given label
    *
-   * @param  {string}  axis     the id of the axis to change
-   * @param  {string}  first    the class to apply to the first element
-   * @param  {string}  last     the class to apply to the last element
-   * @param  {boolean} mainAxis if the axis is the main axis
+   * @param  {string}  axis     - the id of the axis to change
+   * @param  {string}  first    - the class to apply to the first element
+   * @param  {string}  last     - the class to apply to the last element
+   * @param  {boolean} mainAxis - if the axis is the main axis
    */
   function setAxis(axis, first, last, mainAxis) {
     id(axis).firstElementChild.className = first;
@@ -176,8 +179,8 @@
 
   /**
    * Adds the property value stored in the buttons to the editor
-   * @param  {object} label label button that was clicked on
-   * @param  {string} input textarea editor to append style to
+   * @param  {HTMLElement} label - label button that was clicked on
+   * @param  {string}      input - textarea editor to append style to
    */
   function addProperty(label, input) {
     let property = label.parentElement.dataset["property"];
@@ -288,49 +291,73 @@
 
   /* ------------------------------------------- URL -------------------------------------- */
 
-  // Gimmiky way to add this function but I feel like this function would be useful
+  // Gimmicky(?) way to add this function but I feel like it would be useful
 
+  /**
+   * Gets the value of a parameter in the URL
+   * @param  {string} param        - parameter to get value for
+   * @param  {string} defaultValue - default value to return if nothing is found
+   * @return {string} value of the parameter
+   */
   function getURLParam(param, defaultValue) {
     let result = defaultValue;
-    if(window.location.href.indexOf(param) !== -1) {
-      result = decodeURI(getUrlVars()[param]);
+    if (window.location.href.indexOf(param) !== -1) {
+      result = decodeURIComponent(getUrlVars()[param]);
     }
     return result;
   }
 
+  /**
+   * Returns an object that has the parameters in the URL as keys and values as values
+   * @return {Object.<string, string>} object with parameters as keys and their values
+   */
   function getUrlVars() {
     let vars = {};
-    let parts = window.location.href.replace(/[?&]+([^=&]+)=([^&]*)/gi,
-      function(match, key, value) {
-        vars[key] = value;
-      });
+    window.location.href.replace(/[?&]+([^=&]+)=([^&]*)/gi, function(match, key, value) {
+      vars[key] = value;
+    });
     return vars;
   }
 
-  function getCSSURL() {
-    let url = "https://spectralharp.github.io/weird-flex/";
-    let container = id("container-input").value.length !== 0 ? "container=" + encodeURI(id("container-input").value) : "";
-    let item = id("item-input").value.length !== 0 ? "selected=" + encodeURI(id("item-input").value) : "";
-    let add = "";
-    if(container.length !== 0 || item.length !== 0) {
-      add += "?"
-      if(container.length !== 0) {
-        add += container;
-        if(item.length !== 0) {
-          add += "&" + item;
-        }
-      } else {
-        add += item;
+  /**
+   * Generates string containing parameters and values to append to URL
+   * @param  {Object.<string, string>} vars - object with parameters as keys and their values
+   * @return {string}                  string to append to URL
+   */
+  function generateURLVars(vars) {
+    if (vars.length === 0) {
+      return "";
+    }
+    let varStrings = [];
+    for (let k in vars) {
+      if (vars.hasOwnProperty(k) && vars[k].length !== 0) {
+        varStrings.push(`${k}=${vars[k]}`);
       }
     }
-    id("url-output").value = url + add;
+    if (varStrings.length === 0) {
+      return "";
+    }
+    let result = "?";
+    result += varStrings.join("&");
+    return result;
+  }
+
+  /**
+   * Generates URL in the input box in the About tab
+   */
+  function getCSSURL() {
+    id("url-output").value = URL + generateURLVars({
+      "container": encodeURIComponent(id("container-input").value),
+      "selected": encodeURIComponent(id("item-input").value)
+    });
   }
 
   /* ----------------------------------------- Helper ------------------------------------- */
 
   /**
    * Returns the element in the document with the given id
-   * @param  {string} id id of the element to return
+   * @param  {string}      id - id of the element to return
+   * @return {HTMLElement} element in the document with the given id
    */
   function id(id) {
     return document.getElementById(id);

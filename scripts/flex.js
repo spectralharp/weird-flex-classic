@@ -223,7 +223,7 @@
    * @param  {event} e - drag event
    */
   function boxDragEnd() {
-    this.style.opacity = 1;
+    this.style.opacity = null;
     playSound(DROP_SFX);
   }
 

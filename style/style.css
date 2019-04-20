@@ -400,9 +400,12 @@ input[type=checkbox] {
   position: absolute;
   z-index: 10;
   background: #303030;
+  border: 5pt solid silver;
   border-radius: 5px;
   padding: 12pt 10px;
   width: 350px;
+  transform-origin: top left;
+  transition: left 0.2s, top 0.2s;
 }
 
 .box-menu.active {
@@ -436,9 +439,11 @@ input[type=checkbox] {
 
 @keyframes fade-in {
   from {
+    transform: translateY(-5px);
     opacity: 0;
   }
   to {
+    transform: none;
     opacity: 1;
   }
 }

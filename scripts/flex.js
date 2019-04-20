@@ -311,8 +311,10 @@
   function contextMenuCheck(e) {
     if (clickInsideElement(e, "box")) {
       e.preventDefault();
-      id("box-id-label").innerText = e.target.id;
-      id("box-input").value = e.target.style.cssText.replace(/; /gi, ";\n");
+      if(e.target !== null) {
+        id("box-id-label").innerText = e.target.id;
+        id("box-input").value = e.target.style.cssText.replace(/; /gi, ";\n");
+      }
       positionMenu(e);
       toggleMenu(true);
     } else {
@@ -359,7 +361,10 @@
     if(on) {
       id("box-menu").classList.add("active");
     } else {
-      id(id("box-id-label").innerText).style.cssText = id("box-input").value;
+      let box = id(id("box-id-label").innerText);
+      if(box !== null) {
+        box.style.cssText = id("box-input").value;
+      }
       id("box-menu").classList.remove("active");
     }
   }
@@ -368,7 +373,10 @@
    * Update the CSS text of the element that has the menu open
    */
   function updateBox() {
-    id(id("box-id-label").innerText).style.cssText = this.value;
+    let box = id(id("box-id-label").innerText);
+    if(box !== null) {
+      box.style.cssText = this.value;
+    }
   }
 
   /**

@@ -32,9 +32,12 @@
   function initialize() {
     window.addEventListener("resize", setBound);
     window.addEventListener("mouseup", updateSlider);
+    window.addEventListener("contextmenu", contextMenuCheck);
+    window.addEventListener("click", contextMenuClickCheck);
 
     id("container-input").addEventListener("input", updateContainer);
     id("item-input").addEventListener("input", updateItem);
+    id("box-input").addEventListener("input", updateBox);
     id("add-box").addEventListener("click", addBox);
 
     id("delete-drop").addEventListener("dragover", dragoverDeleteZone);
@@ -253,6 +256,11 @@
     deleteBox(document.getElementById(data));
   }
 
+
+  /**
+   * Removes the box
+   * @param  {HTMLElement} box - box to remove
+   */
   function deleteBox(box) {
     if(box === null) {
       return;
@@ -262,6 +270,9 @@
     refreshBoxId();
   }
 
+  /**
+   * Delete the box at the end of flex container
+   */
   function deleteLastBox() {
     deleteBox(id("boxes-container").lastElementChild);
   }
@@ -289,6 +300,113 @@
       boxes[i].innerText = i;
       boxes[i].id = "box-" + i;
     }
+  }
+
+  /* ------------------------------------ Box Right Click --------------------------------- */
+
+  /**
+   * Check if context menu needs to be show, show/do nothing
+   * @param  {event} e - click event
+   */
+  function contextMenuCheck(e) {
+    if (clickInsideElement(e, "box")) {
+      e.preventDefault();
+      id("box-id-label").innerText = e.target.id;
+      id("box-input").value = e.target.style.cssText.replace(/; /gi, ";\n");
+      positionMenu(e);
+      toggleMenu(true);
+    } else {
+      if(!clickInsideElement(e, "box-menu")) {
+        toggleMenu(false);
+      }
+    }
+  }
+
+  /**
+   * Check if there's a click outside of the menu, if so, hide menu
+   * @param  {event} e - click event
+   */
+  function contextMenuClickCheck(e) {
+    if ((e.which || e.button) === 1 && !clickInsideElement(e, "box-menu")) {
+      toggleMenu(false);
+    }
+  }
+
+  /**
+   * Check if the click is within an element with the given class name
+   * @param  {event}  e         - click event
+   * @param  {string} className - class name of elements to check
+   */
+  function clickInsideElement(e, className) {
+    let el = e.srcElement || e.target;
+    if (el.classList.contains(className)) {
+      return el;
+    } else {
+      while (el = el.parentNode) {
+        if (el.classList && el.classList.contains(className)) {
+          return el;
+        }
+      }
+    }
+    return false;
+  }
+
+  /**
+   * Show menu if given true, hide if false
+   * @param  {boolean} on - whether the menu should be toggled
+   */
+  function toggleMenu(on) {
+    if(on) {
+      id("box-menu").classList.add("active");
+    } else {
+      id(id("box-id-label").innerText).style.cssText = id("box-input").value;
+      id("box-menu").classList.remove("active");
+    }
+  }
+
+  /**
+   * Update the CSS text of the element that has the menu open
+   */
+  function updateBox() {
+    id(id("box-id-label").innerText).style.cssText = this.value;
+  }
+
+  /**
+   * Returns the position of the mouse event
+   * @param  {event} e - click event
+   */
+  function getPosition(e) {
+    let posX = 0;
+    let posY = 0;
+
+    if (!e) {
+      let e = window.event;
+    }
+
+    if (e.pageX || e.pageY) {
+      posX = e.pageX;
+      posY = e.pageY;
+    } else if (e.clientX || e.clientY) {
+      posX = e.clientX + document.body.scrollLeft + document.documentElement.scrollLeft;
+      posY = e.clientY + document.body.scrollTop + document.documentElement.scrollTop;
+    }
+
+    return {
+      x: posX,
+      y: posY
+    }
+  }
+
+
+  /**
+   * positions the menu to the point clicked
+   * @param  {event} e - click event
+   */
+  function positionMenu(e) {
+    let menu = id("box-menu");
+    let menuPosition = getPosition(e);
+    menu.style.left = menuPosition.x + "px";
+    menu.style.top = menuPosition.y + "px";
   }
 
   /* ---------------------------------------- Toggles ------------------------------------- */

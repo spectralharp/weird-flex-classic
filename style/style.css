@@ -393,6 +393,27 @@ input[type=checkbox] {
   transform: scale(1.5);
 }
 
+/* Box menu */
+
+.box-menu {
+  display: none;
+  position: absolute;
+  z-index: 10;
+  background: #303030;
+  border-radius: 5px;
+  padding: 12pt 10px;
+  width: 350px;
+}
+
+.box-menu.active {
+  display: block;
+  animation: fade-in 0.15s;
+}
+
+.box-menu pre {
+  margin: 0;
+}
+
 /* Flexing muscle (v important) */
 #muscle {
   display: inline-block;
@@ -410,6 +431,15 @@ input[type=checkbox] {
   }
   50% {
     transform: rotate(8deg) scaleX(0.9);
+  }
+}
+
+@keyframes fade-in {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
   }
 }
 

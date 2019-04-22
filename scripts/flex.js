@@ -69,7 +69,7 @@
    * Sets up event listeners for the collapsables
    */
   function setupCollapse() {
-    let coll = document.querySelectorAll(".collapse");
+    const coll = document.querySelectorAll(".collapse");
     for (let i = 0; i < coll.length; i++) {
       coll[i].addEventListener("click", toggleCollapse);
     }
@@ -79,7 +79,7 @@
    * Sets up event listeners for the boxes
    */
   function setupBoxes() {
-    let boxes = document.querySelectorAll(".box");
+    const boxes = document.querySelectorAll(".box");
     for (let i = 0; i < boxes.length; i++) {
       boxes[i].addEventListener("click", toggleSelect);
       boxes[i].id = "box-" + i;
@@ -91,13 +91,13 @@
    * Sets up value buttons to add CSS to appropriate editors
    */
   function setupValueButtons() {
-    let contain = document.querySelectorAll("#container-flex-properties .value-btn");
+    const contain = document.querySelectorAll("#container-flex-properties .value-btn");
     for (let i = 0; i < contain.length; i++) {
       contain[i].addEventListener("click", function() {
         addProperty(contain[i], "container-input");
       });
     }
-    let items = document.querySelectorAll("#item-flex-properties .value-btn");
+    const items = document.querySelectorAll("#item-flex-properties .value-btn");
     for (let j = 0; j < items.length; j++) {
       items[j].addEventListener("click", function() {
         addProperty(items[j], "item-input");
@@ -135,9 +135,9 @@
    * Updates the axis around the box based on the flex-direction and flex-wrap applied
    */
   function updateAxis() {
-    let container = id("boxes-container");
-    let computedStyle = window.getComputedStyle(container);
-    let normalWrap = computedStyle.flexWrap !== "wrap-reverse";
+    const container = id("boxes-container");
+    const computedStyle = window.getComputedStyle(container);
+    const normalWrap = computedStyle.flexWrap !== "wrap-reverse";
     switch (computedStyle.flexDirection) {
       case "column":
         setAxis("vertical", "", "arrow-head-down", true);
@@ -195,8 +195,8 @@
    * @param  {string}      input - textarea editor to append style to
    */
   function addProperty(label, input) {
-    let property = label.parentElement.dataset["property"];
-    let regex = new RegExp(`(${property} *: *)[\\w-%]*`);
+    const property = label.parentElement.dataset["property"];
+    const regex = new RegExp(`(${property} *: *)[\\w-%]*`);
     if (regex.test(id(input).value)) {
       id(input).value = id(input).value.replace(regex, `$1${label.innerText}`);
     } else {
@@ -252,7 +252,7 @@
   function dragdropDeleteZone(e) {
     e.preventDefault();
     e.target.src = BIN_CLOSED;
-    let data = e.dataTransfer.getData("text");
+    const data = e.dataTransfer.getData("text");
     deleteBox(document.getElementById(data));
   }
 
@@ -282,7 +282,7 @@
    */
   function addBox() {
     playSound(ADD_SFX);
-    let box = document.createElement("div");
+    const box = document.createElement("div");
     box.classList.add("box");
     box.draggable = true;
     box.addEventListener("click", toggleSelect);
@@ -295,7 +295,7 @@
    * Reset ids for all boxes
    */
   function refreshBoxId() {
-    let boxes = document.querySelectorAll(".box");
+    const boxes = document.querySelectorAll(".box");
     for (let i = 0; i < boxes.length; i++) {
       boxes[i].innerText = i;
       boxes[i].id = "box-" + i;
@@ -361,7 +361,7 @@
     if(on) {
       id("box-menu").classList.add("active");
     } else {
-      let box = id(id("box-id-label").innerText);
+      const box = id(id("box-id-label").innerText);
       if(box !== null) {
         box.style.cssText = id("box-input").value;
       }
@@ -373,7 +373,7 @@
    * Update the CSS text of the element that has the menu open
    */
   function updateBox() {
-    let box = id(id("box-id-label").innerText);
+    const box = id(id("box-id-label").innerText);
     if(box !== null) {
       box.style.cssText = this.value;
     }
@@ -388,7 +388,7 @@
     let posY = 0;
 
     if (!e) {
-      let e = window.event;
+      e = window.event;
     }
 
     if (e.pageX || e.pageY) {
@@ -411,8 +411,8 @@
    * @param  {event} e - click event
    */
   function positionMenu(e) {
-    let menu = id("box-menu");
-    let menuPosition = getPosition(e);
+    const menu = id("box-menu");
+    const menuPosition = getPosition(e);
     menu.style.left = menuPosition.x + "px";
     menu.style.top = menuPosition.y + "px";
   }
@@ -424,7 +424,7 @@
    */
   function toggleCollapse() {
     this.classList.toggle("active");
-    let content = this.nextElementSibling;
+    const content = this.nextElementSibling;
     content.style.display = content.style.display === "block" ? "none" : "block";
   }
 
@@ -442,7 +442,7 @@
    * Sets the min and max values for size sliders
    */
   function setBound() {
-    let style = window.getComputedStyle(id("boxes-container"));
+    const style = window.getComputedStyle(id("boxes-container"));
     id("width-slider").min = pxToVw(parseInt(style.minWidth));
     id("width-slider").max = pxToVw(parseInt(style.maxWidth));
     id("height-slider").min = pxToVh(parseInt(style.minHeight));
@@ -462,7 +462,7 @@
    * Update the slider's value to the size of the flex container
    */
   function updateSlider() {
-    let style = window.getComputedStyle(id("boxes-container"));
+    const style = window.getComputedStyle(id("boxes-container"));
     id("width-slider").value = pxToVw(parseInt(style.width));
     id("height-slider").value = pxToVh(parseInt(style.height));
   }

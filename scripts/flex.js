@@ -21,6 +21,8 @@
   const BIN_CLOSED = "image/trashcan_close.png";
   // Trash can drag over image path
   const BIN_OPEN = "image/trashcan_open.png";
+  // Offset of the menu from edge of window
+  const MENU_OFFSET = 10;
 
   /* ------------------------------------ Initialization ---------------------------------- */
 
@@ -256,7 +258,6 @@
     deleteBox(document.getElementById(data));
   }
 
-
   /**
    * Removes the box
    * @param  {HTMLElement} box - box to remove
@@ -315,8 +316,8 @@
         id("box-id-label").innerText = e.target.id;
         id("box-input").value = e.target.style.cssText.replace(/; /gi, ";\n");
       }
-      positionMenu(e);
       toggleMenu(true);
+      positionMenu(e);
     } else {
       if(!clickInsideElement(e, "box-menu")) {
         toggleMenu(false);
@@ -413,8 +414,22 @@
   function positionMenu(e) {
     const menu = id("box-menu");
     const menuPosition = getPosition(e);
-    menu.style.left = menuPosition.x + "px";
-    menu.style.top = menuPosition.y + "px";
+
+    const menuWidth = menu.offsetWidth + MENU_OFFSET;
+    const menuHeight = menu.offsetHeight + MENU_OFFSET;
+    const windowWidth = window.innerWidth;
+    const windowHeight = window.innerHeight;
+
+    if((windowWidth - menuPosition.x) < menuWidth) {
+      menu.style.left = windowWidth - menuWidth + "px";
+    } else {
+      menu.style.left = menuPosition.x + "px";
+    }
+    if((windowHeight - menuPosition.y) < menuHeight) {
+      menu.style.top = windowHeight - menuHeight + "px";
+    } else {
+      menu.style.top = menuPosition.y + "px";
+    }
   }
 
   /* ---------------------------------------- Toggles ------------------------------------- */

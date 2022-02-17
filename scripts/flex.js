@@ -403,7 +403,7 @@
     return {
       x: posX,
       y: posY
-    }
+    };
   }
 
 
@@ -418,7 +418,7 @@
     const menuWidth = menu.offsetWidth + MENU_OFFSET;
     const menuHeight = menu.offsetHeight + MENU_OFFSET;
     const windowWidth = window.innerWidth;
-    const windowHeight = window.innerHeight;
+    const windowHeight = window.innerHeight + window.scrollY;
 
     if((windowWidth - menuPosition.x) < menuWidth) {
       menu.style.left = windowWidth - menuWidth + "px";
